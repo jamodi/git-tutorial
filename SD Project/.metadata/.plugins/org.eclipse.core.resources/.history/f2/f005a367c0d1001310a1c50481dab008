@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>com.sd.service1</display-name>
+  <welcome-file-list>
+    <welcome-file>loginSD.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <servlet-name>my first rest service</servlet-name>
+    <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+    <init-param>
+      <param-name>com.sun.jersey.config.property.packages</param-name>
+      <param-value>com.sd.service1</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>my first rest service</servlet-name>
+    <url-pattern>/api/*</url-pattern>
+  </servlet-mapping>
+   <servlet>
+    <servlet-name>servlet</servlet-name>
+    <servlet-class>com.sd.controller.FirstServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>servlet</servlet-name>
+    <url-pattern>/servicesubmit</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>searchserv</servlet-name>
+    <servlet-class>com.sd.controller.SearchServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>searchserv</servlet-name>
+    <url-pattern>/search</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>confirmserv</servlet-name>
+    <servlet-class>com.sd.controller.ConfirmServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>searchserv</servlet-name>
+    <url-pattern>/confirm</url-pattern>
+  </servlet-mapping>
+</web-app>

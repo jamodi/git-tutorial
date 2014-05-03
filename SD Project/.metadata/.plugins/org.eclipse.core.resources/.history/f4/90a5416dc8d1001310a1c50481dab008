@@ -1,0 +1,303 @@
+package com.sd.service1;
+
+import java.io.ObjectInputStream.GetField;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class RecommendationEngine
+{
+int service_count=1;	
+ArrayList<ArrayList<Integer>> matrix;
+HashMap<Integer, String> services;
+static RecommendationEngine re;
+
+public static ArrayList<int> getworkflows(String query)
+{
+String []x=new String[5];
+x[0]="1 Celcius to Farenhiet";
+x[1]="2 Farenhiet to Celcius";
+x[2]="3 Body Mass Index";
+x[3]="4 Current date and time";
+x[4]="5 Calculator";
+ArrayList<int> result=new ArrayList<int>();
+	switch(query)
+	{
+	case "weather":
+	case "temperature": result.add(x[0]);
+                        result.add(x[1]);
+			result.add(x[4]);
+                        break;
+
+	case "mobile":  result.add(x[3]);
+			result.add(x[5]);
+			break;
+        case "health": result.add(x[2]);
+                       result.add(x[4]);
+			break;
+	case "date":
+		case "time":result.add(x[3]);
+		    result.add(x[4]);
+			
+			break;
+	}
+
+return result;
+}
+
+public RecommendationEngine() {
+	// TODO Auto-generated constructor stub
+matrix=new ArrayList<ArrayList<Integer>>();
+services=new  HashMap<Integer, String> ();
+
+services.put(0,"null service");
+matrix.add(new ArrayList());
+
+
+//re.addService("Temperature");
+
+
+
+workflows a =new workflows();
+ArrayList<Integer> t=new ArrayList<Integer>();
+t.add(1);
+t.add(3);
+t.add(2);
+t.add(4);
+a.f=t;
+addWorkflow( a);
+
+a =new workflows();
+t.clear();
+t.add(1);
+t.add(4);
+t.add(2);
+a.f=t;
+addWorkflow( a);
+
+a =new workflows();
+t.clear();
+t.add(2);
+t.add(3);
+t.add(1);
+a.f=t;
+addWorkflow( a);
+
+a =new workflows();
+t.clear();
+t.add(1);
+t.add(2);
+t.add(3);
+t.add(4);
+a.f=t;
+addWorkflow( a);
+
+a =new workflows();
+t.clear();
+
+t.add(2);
+t.add(4);
+a.f=t;
+addWorkflow( a);
+
+}
+
+
+static RecommendationEngine getInstance()
+{
+	
+	if (re==null)
+	{
+		re = new RecommendationEngine(); 
+		re.addService("a");
+		re.addService("b");
+		re.addService("c");
+		re.addService("d");
+		re.addService("e");
+	}
+	return re;	
+}
+
+
+void addService(String z)
+{
+	service_count++;
+	services.put(new Integer(service_count),z);		
+	ArrayList<Integer> s=new ArrayList();
+    matrix.add(s);
+
+    for (ArrayList<Integer> l: matrix)
+    {
+    	for (int i=l.size();i<service_count;i++)
+    	{
+    	
+    	l.add(0);
+    	
+    	}
+    
+    }
+
+}
+
+
+void init (ArrayList<workflows> z)
+{
+
+	for (workflows e: z)
+	{
+		addWorkflow(e);
+	}
+
+}
+
+
+void addWorkflow(workflows a)
+{
+	a.f.add(0, 0);
+	a.f.add(a.f.size(),0);
+	
+	
+	for (int i=0;i<a.f.size()-1;i++)
+	{
+		ArrayList<Integer> temp= matrix.get(a.f.get(i));
+		
+		for( int t=i+1;t<a.f.size();t++ )
+		{
+          	 
+        temp.set(a.f.get(t),temp.get(a.f.get(t))+1);     
+
+		}
+	
+	}
+
+	
+System.out.print(matrix);	
+
+}
+
+
+
+double  getprobability(int a, int b,int total) {
+	
+double prob=0.00;	
+int pab=0,totala=0,totalb=0;
+pab=matrix.get(a).get(b);
+
+for(int i=0;i<matrix.size();i++)
+	{
+		totala+=matrix.get(a).get(i);
+		totalb+=matrix.get(b).get(i);
+	}
+
+prob=(double)((pab/totala)*totalb)/total;
+
+return prob;
+
+}
+
+
+
+
+ArrayList<String> getRecommendations(int x)
+{
+	ArrayList<String> results=new ArrayList<String>();
+	int total=0;
+	for(int i=0;i<matrix.size();i++)
+	{
+		for (int j=0;j<matrix.size();j++)
+		{
+		
+		total+= matrix.get(i).get(j);
+		
+		}
+		
+	}
+	
+    
+	double x1=-1, x2=-1, x3=-1;
+	String y1="",y2="",y3="";
+	
+	for (int i=0; i<matrix.size();i++)
+	{
+		double t= getprobability(x, i, total);
+		
+		if (x1 > t)
+		{
+			x1= t; 
+		    y1=services.get(i);
+		    continue;    
+		
+		}
+		
+		if (x2 > t)
+		{
+			x2= t; 
+			y2=services.get(i);
+			continue;
+		
+		}
+		 if (x3 > t)
+		{
+			x3= t;
+			y3=services.get(i);
+		    continue;
+		}	
+	
+	}
+	
+	results.add(y1);
+	results.add("->");
+	results.add(y2);
+	results.add("->");
+	results.add(y3);
+	
+	return results;
+
+}
+
+
+
+
+}
+
+
+
+
+
+
+class workflows
+{
+    
+	ArrayList <Integer>	f;
+
+}
+
+
+
+class test
+{
+	
+
+public static void main(String[] args) {
+
+RecommendationEngine e=RecommendationEngine.getInstance();
+workflows a =new workflows();
+ArrayList<Integer> t=new ArrayList<Integer>();
+t.add(1);
+t.add(3);
+t.add(2);
+t.add(4);
+a.f=t;
+e.addService("a");
+e.addService("b");
+e.addService("c");
+e.addService("d");
+e.addService("e");
+
+e.addWorkflow(a);	
+	
+}
+
+
+
+
+}

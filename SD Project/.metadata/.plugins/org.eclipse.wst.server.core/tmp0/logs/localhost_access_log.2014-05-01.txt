@@ -1,0 +1,6 @@
+127.0.0.1 - - [01/May/2014:23:54:49 -0700] "GET / HTTP/1.1" 404 955
+0:0:0:0:0:0:0:1 - - [01/May/2014:23:55:17 -0700] "POST /com.sd.service1/displayuser.jsp HTTP/1.1" 200 984
+0:0:0:0:0:0:0:1 - - [01/May/2014:23:55:21 -0700] "POST /com.sd.service1/Searchresults.jsp HTTP/1.1" 200 795
+0:0:0:0:0:0:0:1 - - [01/May/2014:23:55:50 -0700] "POST /com.sd.service1/search HTTP/1.1" 500 2973
+0:0:0:0:0:0:0:1 - - [01/May/2014:23:57:08 -0700] "GET /com.sd.service1/Service.jsp HTTP/1.1" 200 985
+0:0:0:0:0:0:0:1 - - [01/May/2014:23:57:33 -0700] "POST /com.sd.service1/servicesubmit HTTP/1.1" 404 1051
